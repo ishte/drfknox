@@ -1,0 +1,1 @@
+web gunicorn drfknox.wsgi:application --log-file -
