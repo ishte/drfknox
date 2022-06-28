@@ -1,14 +1,13 @@
-from dataclasses import field
+from rest_framework import serializers 
+from .models import *
+
 from django.contrib.auth.models import User
 from rest_framework import serializers, validators
-
-
 
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('username','password','email','first_name','last_name')
-        
         
         extra_kwargs = {
             "passsword":{'write_only':True},
@@ -43,3 +42,22 @@ class RegisterSerializer(serializers.ModelSerializer):
             
             return user
             
+            
+            
+            
+from rest_framework import serializers 
+from .models import *
+
+
+
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = "__all__"
+        
+
+
+class ProjectDetailsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Project_Details
+        fields = "__all__"

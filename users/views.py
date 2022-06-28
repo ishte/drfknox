@@ -3,6 +3,10 @@ from rest_framework.response import Response
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from knox.auth import AuthToken
 from .serializers import *
+from rest_framework.views import APIView
+from rest_framework.response import Response
+
+
 
 
 
@@ -63,3 +67,21 @@ def register_api(request):
         "token":token        
     })
     
+
+
+
+
+
+class ProfileView(APIView):
+    def get(self, request, format = None):
+        profile = Profile.objects.all()
+        serializer = ProfileSerializer(profile, many=True)
+        return Response(serializer.data)
+
+
+
+class Project_Detail_View(APIView):
+    def get(self, request, format = None):
+        detail = Project_Details.objects.all()
+        serializer = ProjectDetailsSerializer(detail, many=True)
+        return Response(serializer.data)
