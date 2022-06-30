@@ -1,6 +1,7 @@
+from asyncore import read
+from dataclasses import fields
 from rest_framework import serializers 
 from .models import *
-
 from django.contrib.auth.models import User
 from rest_framework import serializers, validators
 
@@ -30,7 +31,6 @@ class RegisterSerializer(serializers.ModelSerializer):
             first_name = validated_data.get('first_name')
             last_name = validated_data.get('last_name')
             
-            
             user = User.objects.create(
                 username = username,
                 password = password,
@@ -39,14 +39,10 @@ class RegisterSerializer(serializers.ModelSerializer):
                 last_name = last_name
                 
             )
-            
             return user
             
-            
-            
-            
-from rest_framework import serializers 
-from .models import *
+
+
 
 
 
@@ -57,7 +53,25 @@ class ProfileSerializer(serializers.ModelSerializer):
         
 
 
+class PaymentTrackingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Payment_Tracking
+        fields = ('installment_number',)
+        
+
+
+
 class ProjectDetailsSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Project_Details
-        fields = "__all__"
+        model = Project_Deatails
+        fields = ("project_detail",)
+
+
+class ProjectDetailsSerializer(serializers.ModelSerializer):
+    project_details =  ProjectDetailsSerializer(read_only=True,many=True) 
+    payment_tracking = PaymentTrackingSerializer(read_only=True,many=True)                  
+    class Meta:
+           model   =  User
+           fields  = ['id','username','payment_tracking','project_details']              
+
+
